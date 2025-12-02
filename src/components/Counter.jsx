@@ -1,13 +1,12 @@
 import { useState } from "react";
+import Header from "./Header";
 
 export default function Counter() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <h1 className="font-bold text-8xl">{count}</h1>
-      </div>
+      <Header className='font-bold text-8xl' title={count} />
       <div className='flex flex-row-reverse gap-10'>
         <button
           className='bg-blue-500 text-white border-2 border-gray-700 text-2xl w-20 h-10'
