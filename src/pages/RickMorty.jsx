@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import CardRickyMorty from "../components/CardRickyMorty";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function RickMorty() {
   const [filter, setFilter] = useState({
@@ -40,7 +42,8 @@ export default function RickMorty() {
 
   return (
     <>
-      <header className='text-center py-10 text-5xl font-bold'>CSS Grid</header>
+      <Navbar />
+      <header className='text-center py-20 text-5xl font-bold'>CSS Grid</header>
       <main className='w-full min-h-dvh p-10'>
         <section className='w-full flex justify-between items-center border-2 border-black p-5 rounded-2xl'>
           <div>
@@ -86,7 +89,9 @@ export default function RickMorty() {
               <option value='robot'>Robot</option>
               <option value='cronenberg'>Cronenberg</option>
               <option value='disease'>Disease</option>
-              <option value='mythological creature'>Mythological Creature</option>
+              <option value='mythological creature'>
+                Mythological Creature
+              </option>
             </select>
           </div>
         </section>
@@ -103,6 +108,7 @@ export default function RickMorty() {
           })}
         </div>
       </main>
+      <Footer />
     </>
   );
 }
