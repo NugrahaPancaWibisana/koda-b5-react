@@ -78,7 +78,15 @@ export default function RickMorty() {
                 Choose Species to Filter
               </option>
               <option value='human'>Human</option>
+              <option value='humanoid'>Humanoid</option>
+              <option value='unknown'>Unknown</option>
+              <option value='poopybutthole'>Poopybutthole</option>
               <option value='alien'>Alien</option>
+              <option value='animal'>Animal</option>
+              <option value='robot'>Robot</option>
+              <option value='cronenberg'>Cronenberg</option>
+              <option value='disease'>Disease</option>
+              <option value='mythological creature'>Mythological Creature</option>
             </select>
           </div>
         </section>
