@@ -2,11 +2,26 @@ import { useEffect, useState } from "react";
 import CardRickyMorty from "../components/CardRickyMorty";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useSearchParams } from "react-router";
 
 export default function RickMorty() {
+  const [searchParam, setSearchParam] = useSearchParams();
   const [filter, setFilter] = useState({
-    selectedSpecies: "",
-    searchName: "",
+    species: searchParam.get("species") || "",
+    name: searchParam.get("name") || "",
+    status: searchParam.get("status") || "",
+  });
+  const [query, setQuery] = useState(() => {
+    const param = {
+      species: searchParam.get("species"),
+      name: searchParam.get("name"),
+      status: searchParam.get("status"),
+    };
+    const data = Object.fromEntries(
+      Object.entries(param).filter(([, value]) => value != null && value !== "")
+    );
+
+    return data;
   });
   const [data, setData] = useState([]);
 
@@ -18,15 +33,25 @@ export default function RickMorty() {
     };
   };
 
-  const searchChange = debounce((value) => {
-    setFilter((obj) => ({ ...obj, searchName: value }));
+  const handlerChangeSearch = debounce((e) => {
+    setQuery((obj) => ({ ...obj, [e.target.name]: e.target.value }));
   }, 500);
+
+  useEffect(() => {
+    (() => {
+      setSearchParam(new URLSearchParams(query));
+    })();
+  }, [query, setSearchParam]);
 
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch(
-          `https://rickandmortyapi.com/api/character/?name=${filter.searchName}&species=${filter.selectedSpecies}`
+          `https://rickandmortyapi.com/api/character/?name=${
+            searchParam.get("name") || ""
+          }&species=${searchParam.get("species") || ""}&status=${
+            searchParam.get("status") || ""
+          }`
         );
 
         setData((await res.json()).results || []);
@@ -34,7 +59,7 @@ export default function RickMorty() {
         console.error(error);
       }
     })();
-  }, [filter]);
+  }, [searchParam]);
 
   useEffect(() => {
     document.title = "Grid CSS";
@@ -49,10 +74,13 @@ export default function RickMorty() {
           <div>
             <h1>Rick and Morty</h1>
           </div>
-          <div className='flex flex-row-reverse gap-5'>
+          <form className='flex flex-row-reverse gap-5' noValidate>
             <button
               type='button'
-              onClick={() => setFilter({ selectedSpecies: "", searchName: "" })}
+              onClick={() => {
+                setQuery({});
+                setFilter({ species: "", name: "", status: "" });
+              }}
             >
               Reset Filter
             </button>
@@ -63,19 +91,27 @@ export default function RickMorty() {
               name='name'
               id='name'
               placeholder='Search character name...'
-              onChange={(e) => searchChange(e.target.value)}
+              value={filter.name}
+              onChange={(e) => {
+                handlerChangeSearch(e);
+                setFilter((value) => ({
+                  ...value,
+                  [e.target.name]: e.target.value,
+                }));
+              }}
             />
 
             <select
               className='outline-0 border-2 border-black'
               name='species'
-              value={filter.selectedSpecies}
-              onChange={(e) =>
+              value={filter.species}
+              onChange={(e) => {
+                handlerChangeSearch(e);
                 setFilter((value) => ({
                   ...value,
-                  selectedSpecies: e.target.value,
-                }))
-              }
+                  [e.target.name]: e.target.value,
+                }));
+              }}
             >
               <option value='' disabled>
                 Choose Species to Filter
@@ -93,16 +129,37 @@ export default function RickMorty() {
                 Mythological Creature
               </option>
             </select>
-          </div>
+            <select
+              className='outline-0 border-2 border-black'
+              name='status'
+              value={filter.status}
+              onChange={(e) => {
+                handlerChangeSearch(e);
+                setFilter((value) => ({
+                  ...value,
+                  [e.target.name]: e.target.value,
+                }));
+              }}
+            >
+              <option value='' disabled>
+                Choose Status to Filter
+              </option>
+              <option value='alive'>Alive</option>
+              <option value='dead'>Dead</option>
+              <option value='unknown'>Unknown</option>
+            </select>
+          </form>
         </section>
         <div className='grid grid-cols-4 gap-10 mt-10'>
           {data.map((value, index) => {
             return (
               <CardRickyMorty
                 key={index}
+                id={value.id}
                 imgUrl={value.image}
                 name={value.name}
                 species={value.species}
+                status={value.status}
               />
             );
           })}
