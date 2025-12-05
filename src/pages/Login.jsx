@@ -10,38 +10,41 @@ export default function Login() {
     console.log(creds);
   };
 
+  const onChangeHandler = (e) =>
+    setCreds((value) => ({ ...value, [e.target.name]: e.target.value }));
+
   return (
     <main className='w-full min-h-dvh bg-emerald-600 flex justify-center items-center'>
-      <section className='bg-white w-[546px] p-22 rounded-2xl flex flex-col gap-10'>
+      <section className='bg-white w-[546px] p-20 rounded-2xl flex flex-col gap-8'>
         <h1 className='font-bold text-2xl'>Welcome Back&#128075;</h1>
         <p>Sign in with your data that you entered during your registration</p>
 
-        <form noValidate>
+        <form className='flex flex-col gap-5' noValidate>
           <div>
             <label htmlFor='email'>Email</label>
             <input
-              className='w-full border border-gray-500 rounded-lg'
+              className='w-full h-13 text-lg border border-gray-500 rounded-sm p-1 mt-1'
               type='email'
               name='email'
               id='email'
+              placeholder='Enter your email'
               value={creds.email}
-              onChange={(e) =>
-                setCreds((value) => ({ ...value, email: e.target.value }))
-              }
+              onChange={onChangeHandler}
             />
           </div>
           <div>
             <label htmlFor='password'>Password</label>
-            <input
-              className='w-full border border-gray-500 rounded-lg'
-              type='password'
-              name='password'
-              id='password'
-              value={creds.password}
-              onChange={(e) =>
-                setCreds((value) => ({ ...value, password: e.target.value }))
-              }
-            />
+            <div>
+              <input
+                className='w-full h-13 text-lg border border-gray-500 rounded-sm p-1 mt-1'
+                type='password'
+                name='password'
+                id='password'
+                placeholder='Enter your password'
+                value={creds.password}
+                onChange={onChangeHandler}
+              />
+            </div>
           </div>
           <div className='flex justify-end'>
             <p className='text-blue-700'>Forgot your password?</p>
