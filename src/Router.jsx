@@ -1,29 +1,33 @@
-import { Outlet, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 import App from "./pages/App.jsx";
 import Product from "./pages/Product";
 import RickMorty from "./pages/RickMorty";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import DetailCharacter from "./pages/DetailCharacter.jsx";
+import InputValidation from "./pages/InputValidation.jsx";
+import Fetch from "./pages/Fetch.jsx";
 
 export default function Router() {
   return (
     <Routes>
       {/* <Home /> */}
-      <Route path='/' element={<Home />} />
+      <Route path='counter' element={<Home />} />
       {/* <Login /> */}
       <Route path='login' element={<Login />} />
       {/* <App /> */}
-      <Route path='counter' element={<App />} />
+      <Route path='/' element={<App />} />
       {/* <Product /> */}
       <Route path='product' element={<Product />} />
       {/* <RickMorty /> */}
       <Route path='characters'>
         <Route index element={<RickMorty />} />
-        <Route path=":id">
-          <Route path=":slug" element={<DetailCharacter />}/>
+        <Route path=':id'>
+          <Route path=':slug' element={<DetailCharacter />} />
         </Route>
       </Route>
+      <Route path='input' element={<InputValidation />} />
+      <Route path='fetch' element={<Fetch />} />
     </Routes>
   );
 }
