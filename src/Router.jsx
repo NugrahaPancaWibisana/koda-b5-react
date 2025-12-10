@@ -7,16 +7,17 @@ import Login from "./pages/Login.jsx";
 import DetailCharacter from "./pages/DetailCharacter.jsx";
 import InputValidation from "./pages/InputValidation.jsx";
 import Fetch from "./pages/Fetch.jsx";
+import Survey from "./pages/Survey.jsx";
 
 export default function Router() {
   return (
     <Routes>
+      {/* <App /> */}
+      <Route path='/' element={<App />} />
       {/* <Home /> */}
       <Route path='counter' element={<Home />} />
       {/* <Login /> */}
       <Route path='login' element={<Login />} />
-      {/* <App /> */}
-      <Route path='/' element={<App />} />
       {/* <Product /> */}
       <Route path='product' element={<Product />} />
       {/* <RickMorty /> */}
@@ -28,6 +29,7 @@ export default function Router() {
       </Route>
       <Route path='input' element={<InputValidation />} />
       <Route path='fetch' element={<Fetch />} />
+      <Route path='survey' element={<Survey />} />
     </Routes>
   );
 }
