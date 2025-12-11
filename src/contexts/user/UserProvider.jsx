@@ -6,7 +6,7 @@ export default function UserProvider({ children }) {
     user: JSON.parse(localStorage.getItem("user")) || {},
   };
 
-  console.log(initialState);
+  // console.log(initialState);
 
   const [state, dispatch] = useReducer((prevState, action) => {
     switch (action.type) {

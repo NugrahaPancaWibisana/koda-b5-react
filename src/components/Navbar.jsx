@@ -11,7 +11,7 @@ export default function Navbar() {
   });
 
   // console.log(state);
-  console.log(user);
+  // console.log(user);
 
   // console.log(URL.revokeObjectURL(user.img));
 
