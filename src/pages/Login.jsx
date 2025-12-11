@@ -1,13 +1,33 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { userContext } from "../contexts/user/userContext";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { dispatch } = useContext(userContext);
   const [creds, setCreds] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
   const submitHandler = () => {
-    console.log(creds);
+    const newCreds = {};
+
+    Object.assign(newCreds, {
+      username: creds.username,
+    });
+
+    dispatch({
+      type: "LOGIN",
+      payload: newCreds,
+    });
+
+    setCreds({
+      username: "",
+      password: "",
+    });
+
+    navigate("/", { replace: true });
   };
 
   const onChangeHandler = (e) =>
@@ -19,16 +39,20 @@ export default function Login() {
         <h1 className='font-bold text-2xl'>Welcome Back&#128075;</h1>
         <p>Sign in with your data that you entered during your registration</p>
 
-        <form className='flex flex-col gap-5' noValidate>
+        <form
+          className='flex flex-col gap-5'
+          noValidate
+          onSubmit={(e) => e.preventDefault()}
+        >
           <div>
-            <label htmlFor='email'>Email</label>
+            <label htmlFor='username'>Username</label>
             <input
               className='w-full h-13 text-lg border border-gray-500 rounded-sm p-1 mt-1'
-              type='email'
-              name='email'
-              id='email'
-              placeholder='Enter your email'
-              value={creds.email}
+              type='username'
+              name='username'
+              id='username'
+              placeholder='Enter your username'
+              value={creds.username}
               onChange={onChangeHandler}
             />
           </div>
